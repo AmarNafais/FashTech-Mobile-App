@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
-import { useNavigation } from '@react-navigation/native'; // Import useNavigation
+import { useNavigation } from '@react-navigation/native';
 import styles from './style.js';
 import ColorPicker from '../../components/color-picker/color-picker.js';
 import SizeSelector from '../../components/size-selector/size-selector.js';
 import ImageLoader from '../../components/image-loader/image-loader.js';
 
 export default function Dashboard() {
-  const navigation = useNavigation(); // Initialize useNavigation
+  const navigation = useNavigation();
   const [selectedColor, setSelectedColor] = useState('#000000');
   const [selectedSize, setSelectedSize] = useState('M');
 
@@ -27,7 +27,7 @@ export default function Dashboard() {
   };
 
   const handleCancel = () => {
-    navigation.navigate('Home'); // Navigate to Home on cancel
+    navigation.navigate('Home');
   };
 
   return (
