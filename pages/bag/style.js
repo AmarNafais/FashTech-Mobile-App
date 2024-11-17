@@ -68,7 +68,7 @@ export default StyleSheet.create({
     fontSize: 22,
     fontWeight: 'bold',
     textAlign: 'center',
-    color: '#fff',
+    color: '#A87676',
   },
   emptyMessage: {
     fontSize: 20,

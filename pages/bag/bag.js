@@ -1,49 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { View, Text, FlatList, TouchableOpacity, Image } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useShoppingBag } from '../bag/bag-context';
 import styles from './style';
 
-export default function ShoppingTag() {
-  const [items, setItems] = useState([]);
-
-  useEffect(() => {
-    const detectShoppingBag = () => {
-      const detectedItems = [
-        { id: '1', name: 'Pedlar Kids', price: 680, quantity: 1, imageUri: 'https://i.imgur.com/cZ89qGq.png' },
-        { id: '2', name: 'Adidas Kids', price: 720, quantity: 1, imageUri: 'https://i.imgur.com/g8MskSs.png' },
-        { id: '3', name: 'Nike Kids', price: 670, quantity: 1, imageUri: 'https://i.imgur.com/dmNx2Sw.png' },
-        { id: '4', name: 'Nolimit Kids', price: 550, quantity: 1, imageUri: 'https://i.imgur.com/rXMB6Jz.png' },
-        { id: '5', name: 'Pedlar Kids', price: 870, quantity: 1, imageUri: 'https://i.imgur.com/mDCB3Oc.png' }
-      ];
-      setItems(detectedItems);
-    };
-    detectShoppingBag();
-  }, []);
+export default function ShoppingBag() {
+  const { items, addItem, removeItem, deleteItem } = useShoppingBag();
 
   const increaseQuantity = (id) => {
-    setItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
-      )
-    );
+    addItem({ id });
   };
 
   const decreaseQuantity = (id) => {
-    setItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === id && item.quantity > 1
-          ? { ...item, quantity: item.quantity - 1 }
-          : item
-      )
-    );
-  };
-
-  const deleteItem = (id) => {
-    setItems((prevItems) => prevItems.filter((item) => item.id !== id));
+    removeItem(id);
   };
 
   const calculateTotal = () => {
-    return items.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
+    return items.reduce((total, item) => total + (item.price || 0) * item.quantity, 0).toFixed(2);
   };
 
   const renderItem = ({ item }) => (
@@ -51,7 +24,7 @@ export default function ShoppingTag() {
       <Image source={{ uri: item.imageUri }} style={styles.itemImage} />
       <View style={styles.itemInfo}>
         <Text style={styles.itemName}>{item.name}</Text>
-        <Text style={styles.itemPrice}>Rs.{item.price.toFixed(2)}</Text>
+        <Text style={styles.itemPrice}>Rs.{(item.price || 0).toFixed(2)}</Text>
       </View>
       <View style={styles.iconContainer}>
         <TouchableOpacity onPress={() => increaseQuantity(item.id)} style={styles.iconButton}>
