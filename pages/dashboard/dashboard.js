@@ -54,8 +54,8 @@ const Dashboard = () => {
       imageUri: currentImage,
       quantity: 1,
     };
-    addItem(itemToAdd); // Call the addItem function from context
-    Alert.alert('Success', 'Item added to bag!');
+    addItem(itemToAdd);
+    navigation.navigate('Scan-Bag');
   };
 
   const handleCancel = () => {
@@ -125,7 +125,7 @@ const Dashboard = () => {
 
             <TouchableOpacity
               style={[styles.button, styles.addButton]}
-              onPress={handleAddToBag} // Update to call handleAddToBag
+              onPress={handleAddToBag}
             >
               <Text style={[styles.buttonText, { color: '#1A1A1A' }]}>Add to Bag</Text>
             </TouchableOpacity>

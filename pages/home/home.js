@@ -16,7 +16,7 @@ export default function Home() {
     try {
       setError(null); // Reset error state
       const response = await axios.get('http://192.168.1.41:8080/api/rfid/retrieveTag'); // Adjust the URL as needed
-      if (response.data) {
+      if (response.data && response.data.message === "RFID exists in Pieces") {
         setRfidData(response.data);
       }
       // Log response data for debugging
