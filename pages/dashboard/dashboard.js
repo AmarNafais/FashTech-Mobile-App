@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableOpacity, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { useShoppingBag } from '../bag/bag-context'; // Import the context
+import Ionicons from 'react-native-vector-icons/Ionicons'; // Import Ionicons for the cancel icon
 import styles from './style';
 
 const Dashboard = () => {
@@ -57,12 +58,21 @@ const Dashboard = () => {
     Alert.alert('Success', 'Item added to bag!');
   };
 
+  const handleCancel = () => {
+    navigation.navigate('Home'); // Redirect to the Home page
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.content}>
         <View style={styles.header}>
           <Text style={styles.title}>{name || 'Modern Comfort Wear'}</Text>
           <Text style={styles.price}>${price || 129.99}</Text>
+
+          {/* Cancel Icon */}
+          <TouchableOpacity onPress={handleCancel} style={styles.cancelIcon}>
+            <Ionicons name="close" size={30} color="#000" />
+          </TouchableOpacity>
         </View>
 
         <View style={styles.imageContainer}>
@@ -82,7 +92,7 @@ const Dashboard = () => {
                 <TouchableOpacity
                   key={color}
                   onPress={() => handleColorChange(color)}
-                  style={[
+                  style={[ 
                     styles.colorButton,
                     { backgroundColor: color },
                     selectedColor === color && styles.selectedColor

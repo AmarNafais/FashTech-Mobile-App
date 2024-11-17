@@ -130,6 +130,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  cancelIcon: {
+    position: 'absolute',
+    right: 10,
+    top: 10,
+    zIndex: 1, // Ensure it's on top of other content
   },  
 });
 export default styles;
