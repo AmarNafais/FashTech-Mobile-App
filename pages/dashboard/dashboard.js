@@ -28,12 +28,13 @@ const Dashboard = () => {
   const [currentImage, setCurrentImage] = useState(imageUri || 'https://i.imgur.com/cZ89qGq.png');
 
   const colorImages = {
-    '#C62E2E': 'https://i.imgur.com/cZ89qGq.png',
-    '#0D92F4': 'https://i.imgur.com/dmNx2Sw.png',
-    '#88C273': 'https://i.imgur.com/g8MskSs.png',
-    '#F87A53': 'https://i.imgur.com/mDCB3Oc.png',
-    '#FFE31A': 'https://i.imgur.com/rXMB6Jz.png',
-    '#1A1A1D': 'https://i.imgur.com/DZXqyJ3.png',
+    '#ffffff': 'https://i.imgur.com/UBFiUli.png',
+    '#1A1A1D': 'https://i.imgur.com/QUdOxaL.png',
+    '#FF6500': 'https://i.imgur.com/iOhI2HA.png',
+    '#EEDF7A': 'https://i.imgur.com/QO6l698.png',
+    '#EBEAFF': 'https://i.imgur.com/v1Zboo4.png',
+    '#1F4529': 'https://i.imgur.com/qVkfNMi.png',
+    '#22177A': 'https://i.imgur.com/GxJG4GF.png',
   };
 
   useEffect(() => {

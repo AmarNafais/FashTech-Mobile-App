@@ -76,4 +76,10 @@ export default StyleSheet.create({
     color: '#888',
     marginTop: 50,
   },
+  cancelButton: {
+    position: 'absolute',
+    top: 15,
+    right: 15,
+    zIndex: 1, // Ensure it stays on top of other elements
+  },  
 });

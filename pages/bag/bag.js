@@ -1,11 +1,13 @@
 import React from 'react';
 import { View, Text, FlatList, TouchableOpacity, Image } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useNavigation } from '@react-navigation/native'; // Import useNavigation
 import { useShoppingBag } from '../bag/bag-context';
 import styles from './style';
 
 export default function ShoppingBag() {
   const { items, addItem, removeItem, deleteItem } = useShoppingBag();
+  const navigation = useNavigation(); // Access navigation
 
   const increaseQuantity = (id) => {
     addItem({ id });
@@ -43,6 +45,14 @@ export default function ShoppingBag() {
 
   return (
     <View style={styles.container}>
+      {/* Top-right corner cancel button */}
+      <TouchableOpacity
+        style={styles.cancelButton}
+        onPress={() => navigation.navigate('Home')} // Navigate to Home
+      >
+        <Ionicons name="close" size={40} color="#000" />
+      </TouchableOpacity>
+
       {items.length > 0 ? (
         <>
           <Text style={styles.title}>Items in Bag</Text>

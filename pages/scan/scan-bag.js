@@ -17,7 +17,7 @@ export default function ScanBag() {
   const fetchRfidData = async () => {
     try {
       setError(null); // Reset error state
-      const response = await axios.get('http://192.168.1.41:8080/api/rfid/retrieveTag'); // Adjust the URL as needed
+      const response = await axios.get('http://192.168.81.126:8080/api/rfid/retrieveTag'); // Adjust the URL as needed
       if (response.data) {
         console.log('RFID Data:', JSON.stringify(response.data));
         
