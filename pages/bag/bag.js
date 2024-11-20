@@ -1,20 +1,49 @@
-import React from 'react';
-import { View, Text, FlatList, TouchableOpacity, Image } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, FlatList, TouchableOpacity, Image, Alert } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { useNavigation } from '@react-navigation/native'; // Import useNavigation
+import { useNavigation } from '@react-navigation/native';
 import { useShoppingBag } from '../bag/bag-context';
+import axios from 'axios';
 import styles from './style';
 
 export default function ShoppingBag() {
-  const { items, addItem, removeItem, deleteItem } = useShoppingBag();
-  const navigation = useNavigation(); // Access navigation
+  const { items, removeItem, deleteItem } = useShoppingBag();
+  const navigation = useNavigation();
+  const [loading, setLoading] = useState(false);
 
-  const increaseQuantity = (id) => {
-    addItem({ id });
+  const addSampleItemToBackend = async () => {
+    setLoading(true);
+    try {
+      const postData = {
+        bagId: 1,
+        pieceId: 1,
+        quantity: 10,
+      };
+
+      await axios.post('http://192.168.81.126:8080/api/bag-items/', postData);
+      console.log('Sample item added to backend:', postData);
+    } catch (err) {
+      console.error(err);
+      Alert.alert("Error", "Failed to add sample item to bag");
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const decreaseQuantity = (id) => {
-    removeItem(id);
+  useEffect(() => {
+    addSampleItemToBackend();
+  }, []);
+
+  const increaseQuantity = (item) => {
+    const updatedItem = { ...item, quantity: item.quantity + 1 };
+  };
+
+  const decreaseQuantity = (item) => {
+    if (item.quantity > 1) {
+      const updatedItem = { ...item, quantity: item.quantity - 1 };
+    } else {
+      removeItem(item.id);
+    }
   };
 
   const calculateTotal = () => {
@@ -29,11 +58,11 @@ export default function ShoppingBag() {
         <Text style={styles.itemPrice}>Rs.{(item.price || 0).toFixed(2)}</Text>
       </View>
       <View style={styles.iconContainer}>
-        <TouchableOpacity onPress={() => increaseQuantity(item.id)} style={styles.iconButton}>
+        <TouchableOpacity onPress={() => increaseQuantity(item)} style={styles.iconButton}>
           <Ionicons name="add-circle" size={24} color="#fff" />
         </TouchableOpacity>
         <Text style={styles.quantityText}>{item.quantity}</Text>
-        <TouchableOpacity onPress={() => decreaseQuantity(item.id)} style={styles.iconButton}>
+        <TouchableOpacity onPress={() => decreaseQuantity(item)} style={styles.iconButton}>
           <Ionicons name="remove-circle" size={24} color="#fff" />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => deleteItem(item.id)} style={styles.iconButton}>
@@ -45,15 +74,16 @@ export default function ShoppingBag() {
 
   return (
     <View style={styles.container}>
-      {/* Top-right corner cancel button */}
       <TouchableOpacity
         style={styles.cancelButton}
-        onPress={() => navigation.navigate('Home')} // Navigate to Home
+        onPress={() => navigation.navigate('Home')}
       >
         <Ionicons name="close" size={40} color="#000" />
       </TouchableOpacity>
 
-      {items.length > 0 ? (
+      {loading ? (
+        <Text style={styles.loadingText}>Adding item...</Text> // Show loading text
+      ) : items.length > 0 ? (
         <>
           <Text style={styles.title}>Items in Bag</Text>
           <FlatList
@@ -62,7 +92,7 @@ export default function ShoppingBag() {
             renderItem={renderItem}
           />
           <View style={styles.totalContainer}>
-            <Text style={styles.totalText}>Total: Rs.{calculateTotal()}</Text>
+            <Text style={ styles.totalText}>Total: Rs.{calculateTotal()}</Text>
           </View>
         </>
       ) : (

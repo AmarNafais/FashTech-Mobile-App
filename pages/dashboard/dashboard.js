@@ -35,6 +35,7 @@ const Dashboard = () => {
     '#EBEAFF': 'https://i.imgur.com/v1Zboo4.png',
     '#1F4529': 'https://i.imgur.com/qVkfNMi.png',
     '#22177A': 'https://i.imgur.com/GxJG4GF.png',
+    //'#C80036': 'https://i.imgur.com/JBDQrTA.png',
   };
 
   useEffect(() => {

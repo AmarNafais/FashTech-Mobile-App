@@ -13,7 +13,7 @@ export const ShoppingBagProvider = ({ children }) => {
           i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
         );
       }
-      return [...prevItems, item]; // Add new item if it doesn't exist
+      return [...prevItems, item];
     });
   };
 
@@ -25,7 +25,7 @@ export const ShoppingBagProvider = ({ children }) => {
           item.id === id ? { ...item, quantity: item.quantity - 1 } : item
         );
       } else {
-        return prevItems.filter((item) => item.id !== id); // Remove item if quantity is 1
+        return prevItems.filter((item) => item.id !== id);
       }
     });
   };
